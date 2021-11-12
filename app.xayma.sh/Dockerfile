@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /var/www
 
-RUN git clone --depth 1 --branch 0.9.2 https://github.com/supermalang/app.xayma.sh.git \
+RUN git clone --depth 1 --branch 0.9.3 https://github.com/supermalang/app.xayma.sh.git \
     && curl -sS https://getcomposer.org/installer -o composer-setup.php \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && cd app.xayma.sh \
