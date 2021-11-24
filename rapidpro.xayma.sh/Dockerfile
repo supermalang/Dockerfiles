@@ -44,12 +44,13 @@ ENV VIRTUAL_ENV="/venv"
 
 # Install configuration related dependencies
 RUN /venv/bin/pip3 install --upgrade pip && /venv/bin/pip3 install -U pip wheel setuptools && poetry install --no-interaction --no-dev && poetry add \
-        "django-getenv==1.3.1" \
         "django-cache-url==1.3.1" \
-        "uwsgi==2.0.15" \
-        "whitenoise==4.0" \
+        "django-getenv==1.3.1" \
+        "django-utils-six==2.0" \
         "flower==0.9.2" \
-        "tornado<6.0.0"
+        "tornado<6.0.0" \
+        "uwsgi==2.0.15" \
+        "whitenoise==5.3.0" 
 
 RUN cd /rapidpro \
     && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
