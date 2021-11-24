@@ -1,0 +1,36 @@
+sudo: required
+language: python
+services:
+  - docker
+group: trusty_latest
+env:
+  global:
+    - REGISTRY_USER=rapidproautomation
+    - IMAGE="praekeltfoundation/mailroom" VERSION="" REPO="nyaruka/mailroom"
+    - secure: "d02hOYrLDcbz/Rrbo5anwjfCNTqGqdkRi9Ju6tjtB3AmEeO4Y1XQtu/coqkrrfk4+tZvaAVCLCXXMGvMynSVFo9XM0ytY/ROApaAwaPYJ+7/8zV8TuVuSiGYTZo7anrNcPBzUKXq78tyV+N+VyhqYFeGDTP141aomzJf1cytvW7YeNm5eczLhZzMGYsbvfHulkN9BaGcpP6eaK23lVmQ7vB70artE4q5Cr3jAd+cKJVc86fWavF1hcDBzUCyAeB+Kd2v0vm1y2HVvA5jLqTvJLBuq6Rs99M6wrnqZkpkorDlHeYuB9IdqDLYs41oA1UVbnWHR2p+dXlrcpuNhIy/+aCVvPjaFhwKXmm0YV9AGLMEvvu4YKwCMzfidCVY14Hv4/1bkGIG9a5lp3zCFApID4QIY2+Yv6EeRgxhtEpLrEkh4B8Mkpd7c78llbv/CvTiywkq3hAOl3HT2R7w9hF/Vd4VBPNVhoBOSi7cDDom6AbJfTmXoiU2H5K7Uak0PZMWl+De2/VHmvYHhwAlPZLxhvyytlBfAvHlmEC1RHsyslcWXVe+X0Bxs+43pyQ26i+Xdqt7RiTX5xP+kxHOjwRmFdTZOJjeiGgaDdNw1ZUI/hSUGNaNqoj1B4JS8OFTmR2oeD+CGcAkHQ1w8Gt1MUK2nY0QbxPSa47VVtoeV1qPICc="
+    - secure: "VUVwGhZN8xW0c26OEgOWRlk84219CsmJwYvbAGG5GHN9YXciuMnuajhXH9NFwf6/il2JvJasGFDsODzpoWXK1yQaqlOBv0hLah9mlP8Oz63Ma5+mNgvLcWCdYFtF8F2fjlARXDXmT/ZXtkHh0FycNdSTV//bNim5+mml/XKSu8cHPHsIxszeVWD5kMhms8gaEPumBJs5b8/nzsNHe8hsLJxKGO5gS/i9A1vml5Uqdfb63Z3q5Eb576K3w3OU7E3VEvRo9s8j5RzM4OqjjjCaQzN1J4YW4XvlVnsHWP1FFCAKpVhBkD2K2PNf2pEaBwAxEgGPn5NpWSvzDC/gxTminw91wxhl+Mrlhr8MFowLRb7900uD4w9SaUxi6R7Oj6P+hv8sEPKok+rIABBz8lGdY395aAs25s4uxgQD8m5HHUWdJDyDQc2LjdBJl59fHtaf5CKcO/c44TMvKPRbq+7btGWAFMsv4l9+9Eno6Md9vMzZvea0i8mlMQw2GNvU9bWVP+fFUTPKVzE0sLKtEGKMvSwFOENi+u5c7FEEsO/Yl7bioH/t22ng1s0zEqoLtyMYH75virgn1/JItLsM1B6ItTLtA0Y1qzTB6gVfm49/tdMHcIJdCMihfsVKrENOmnidHSroaPK4DiYw6gtI7i2+UdYOb+YH60P3YPpFNUCv398="
+before_script:
+  - 'LATEST_TAG=$(curl -H "Authorization: Bearer $GITHUB_ACCESS_TOKEN" -s https://api.github.com/repos/$REPO/tags  |
+    jq -r ''.[0].name'')'
+  - LATEST_TAG="${LATEST_TAG//[v]}"
+  - VERSION=${VERSION:-$LATEST_TAG}
+install: []
+script:
+  - docker pull "$IMAGE" || true
+  - |
+    docker build --pull --cache-from "$IMAGE" \
+      --tag "$IMAGE" \
+      --build-arg MAILROOM_VERSION=$VERSION \
+      --build-arg MAILROOM_REPO=$REPO \
+      .
+after_script:
+  - docker images
+before_deploy:
+  - pip install docker-ci-deploy==0.3.0
+  - echo -n $REGISTRY_PASS | docker login -u "$REGISTRY_USER" --password-stdin
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: dcd --tag-version "$VERSION" --tag-semver --tag-latest "$IMAGE"
+  on:
+    branch: master
