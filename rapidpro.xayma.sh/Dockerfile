@@ -15,31 +15,12 @@ WORKDIR /rapidpro
 
 RUN set -ex \
         && apt install -y --no-install-recommends \
-                bash \
-                patch \
-                git \
-                postgresql-client-11 \
-                libpq-dev \
-                postgresql-server-dev-11 \
-                libjpeg62-turbo-dev \
-                libpng-dev \
-                libfreetype6-dev \
-                libxslt-dev \
-                libxml2-dev \
-                zlib1g-dev \
-                libffi-dev \
-                libpcre3-dev \
-                readline-common \
-                libreadline-dev \
-                libncurses-dev \
-                libzmq5 \
-                curl \
-                cargo \
-                python-dev
+            postgresql-client-11 \
+            postgresql-server-dev-11 \
+            readline-common 
 
 # Install `libmagic` (needed since rapidpro v3.0.64)
-# Install `pcre` and `libxml2` for uwsgi
-RUN apt-get install -y --no-install-recommends libmagic1 libpcre3-dev libxml2-dev    
+RUN apt-get install -y --no-install-recommends libmagic1
 
 ARG RAPIDPRO_VERSION
 ARG RAPIDPRO_REPO

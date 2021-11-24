@@ -1,5 +1,5 @@
 #!/bin/sh
-set -ex # fail on any error & print commands as they're run
+#set -ex # fail on any error & print commands as they're run
 if [ "x$MANAGEPY_COLLECTSTATIC" = "xon" ]; then
 	/venv/bin/python manage.py collectstatic --noinput --no-post-process
 fi
