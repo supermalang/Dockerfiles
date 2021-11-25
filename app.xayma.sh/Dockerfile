@@ -17,8 +17,8 @@ RUN mv ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini \
 
 WORKDIR /var/www
 
-ARG XAYMA_APP_VERSION
-ENV XAYMA_APP_VERSION=${XAYMA_APP_VERSION:-0.9.41}
+ARG XAYMA_APP_VERSION=0.9.41
+ENV XAYMA_APP_VERSION=${XAYMA_APP_VERSION}
 
 RUN git clone --depth 1 --branch ${XAYMA_APP_VERSION} https://github.com/supermalang/app.xayma.sh.git \
     && curl -sS https://getcomposer.org/installer -o composer-setup.php \
