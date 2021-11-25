@@ -34,7 +34,8 @@ _default_database_config['DISABLE_SERVER_SIDE_CURSORS'] = True
 
 DATABASES = {
     'default': _default_database_config,
-    'direct': _direct_database_config
+    'direct': _direct_database_config,
+    'readonly': _direct_database_config # Added this to comply with RapidProv7.0.0
 }
 
 REDIS_URL = env('REDIS_URL', required=True)
