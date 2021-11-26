@@ -18,7 +18,7 @@ RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends wget \
     && rm -rf /var/lib/apt/lists/* \
-    && git clone --depth 1 v "https://github.com/$MAILROOM_REPO.git" \
+    && git clone --depth 1 "https://github.com/$MAILROOM_REPO.git" \
     && cd mailroom \
     && go build "github.com/$MAILROOM_REPO"/cmd/mailroom  \
     && cp mailroom /go/bin \ 
