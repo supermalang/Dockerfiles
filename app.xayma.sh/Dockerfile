@@ -20,7 +20,7 @@ WORKDIR /var/www
 ARG XAYMA_APP_VERSION=0.9.41
 ENV XAYMA_APP_VERSION=${XAYMA_APP_VERSION}
 
-RUN git clone --depth 1 --branch ${XAYMA_APP_VERSION} https://github.com/supermalang/app.xayma.sh.git \
+RUN git clone --depth 1 https://github.com/supermalang/app.xayma.sh.git \
     && curl -sS https://getcomposer.org/installer -o composer-setup.php \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && cd app.xayma.sh \
