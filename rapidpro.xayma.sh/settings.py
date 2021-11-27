@@ -349,9 +349,9 @@ BRANDING = {
         "tiers": dict(multi_user=0, multi_org=0),
         "bundles": [],
         "welcome_packs": [dict(size=5000, name="Demo Account"), dict(size=100000, name="VisiMax Account")],
-        "title": _("Visually build nationally scalable mobile applications"),
+        "title": _("Visually build highly scalable mobile applications"),
         "description": _("Visually build nationally scalable mobile applications from anywhere in the world."),
-        "credits": _("Copyright &copy; 2012-2021 UNICEF, Nyaruka, and individual contributors. All Rights Reserved. Customized service hosted by VisiMax." ),
+        "credits": _("Copyright &copy; 2012-2021 UNICEF, Nyaruka, and individual contributors. This is a customized service hosted by VisiMax." ),
     }
 }
 DEFAULT_BRAND = os.environ.get("DEFAULT_BRAND", "rapidpro.io")

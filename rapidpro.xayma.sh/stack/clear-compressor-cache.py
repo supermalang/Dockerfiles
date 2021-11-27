@@ -8,12 +8,13 @@ settings.configure()
 
 key_prefix = cache.make_key('django_compressor')
 
-REDIS_URL = env('REDIS_URL', required=True)
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_PORT = os.environ.get('REDIS_PORT', 6379)
 
-up = urlparse(REDIS_URL)
+up = urlparse(REDIS_HOST)
 redis_host = up.hostname
-redis_port = int(up.port or 6379)
-redis_db = int(up.path.lstrip('/'))
+redis_port = REDIS_PORT
+redis_db = 15
 
 redis = redis.Redis(host=redis_host, port=redis_port, db=redis_db)
 keys = redis.keys('%s.*' % (key_prefix,))
