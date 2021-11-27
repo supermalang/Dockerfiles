@@ -942,11 +942,11 @@ TEST_EXCLUDE = ("smartmin",)
 # -----------------------------------------------------------------------------------
 _default_database_config = {
     "ENGINE": "django.contrib.gis.db.backends.postgis",
-    "NAME": os.environ.get(('DATABASE_NAME', 'temba'),
-    "USER": os.environ.get(('DATABASE_USER', 'temba')
-    "PASSWORD": os.environ.get(('DATABASE_TEMBA', 'temba')
-    "HOST": os.environ.get(('DATABASE_HOST', 'localhost'),
-    "PORT": os.environ.get(('DATABASE_PORT', '5432',
+    "NAME": os.environ.get('DATABASE_NAME', 'temba'),
+    "USER": os.environ.get('DATABASE_USER', 'temba')
+    "PASSWORD": os.environ.get('DATABASE_TEMBA', 'temba')
+    "HOST": os.environ.get('DATABASE_HOST', 'localhost'),
+    "PORT": os.environ.get('DATABASE_PORT', '5432',
     "ATOMIC_REQUESTS": True,
     "CONN_MAX_AGE": 60,
     "OPTIONS": {},
@@ -961,7 +961,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 INTERNAL_IPS = iptools.IpRangeList("127.0.0.1", "192.168.0.10", "192.168.0.0/24", "0.0.0.0")  # network block
 
-HOSTNAME = os.environ.get(('DOMAIN_NAME', 'localhost')
+HOSTNAME = os.environ.get('DOMAIN_NAME', 'localhost')
 
 # The URL and port of the proxy server to use when needed (if any, in requests format)
 OUTGOING_PROXIES = {}
@@ -969,8 +969,8 @@ OUTGOING_PROXIES = {}
 # -----------------------------------------------------------------------------------
 # Caching using Redis
 # -----------------------------------------------------------------------------------
-REDIS_HOST = os.environ.get(('REDIS_HOST', 'localhost')
-REDIS_PORT = os.environ.get(('REDIS_PORT', '6379')
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
 REDIS_DB = 10 if TESTING else 15  # we use a redis db of 10 for testing so that we maintain caches for dev
 
 CACHES = {
