@@ -69,7 +69,7 @@ FLOW_FROM_EMAIL = "Temba <no-reply@temba.io>"
 # HTTP Headers using for outgoing requests to other services
 OUTGOING_REQUEST_HEADERS = {"User-agent": "RapidPro"}
 
-STORAGE_URL = None  # may be an absolute URL to /media (like http://localhost:8000/media) or AWS S3
+STORAGE_URL = os.environ.get("STORAGE_URL", "http://localhost:8000/media")  # may be an absolute URL to /media (like http://localhost:8000/media) or AWS S3
 STORAGE_ROOT_DIR = "test_orgs" if TESTING else "orgs"
 
 # -----------------------------------------------------------------------------------
@@ -165,7 +165,7 @@ COMPRESS_ROOT = os.path.join(PROJECT_DIR, "../sitestatic")
 MEDIA_ROOT = os.path.join(PROJECT_DIR, "../media")
 MEDIA_URL = "/media/"
 
-HELP_URL = None
+HELP_URL = os.path.join("HELP_URL", "")
 
 
 # -----------------------------------------------------------------------------------
@@ -982,7 +982,7 @@ CACHES = {
 # -----------------------------------------------------------------------------------
 # Async tasks using Celery
 # -----------------------------------------------------------------------------------
-CELERY_RESULT_BACKEND = None
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', REDIS_URL)
 CELERY_BROKER_URL = "redis://%s:%s/%s" % (REDIS_HOST, REDIS_PORT, REDIS_DB)
 
 # by default, celery doesn't have any timeout on our redis connections, this fixes that
