@@ -101,7 +101,7 @@ MODELTRANSLATION_TRANSLATION_REGISTRY = "translation"
 # -----------------------------------------------------------------------------------
 # Default language used for this installation
 # -----------------------------------------------------------------------------------
-LANGUAGE_CODE = os.environ.get("LANGUAGE_CODE", "fr")
+LANGUAGE_CODE = os.environ.get("LANGUAGE_CODE", "en-us")
 
 # -----------------------------------------------------------------------------------
 # Available languages for translation
@@ -115,7 +115,7 @@ LANGUAGES = (
     ("pt-br", _("Portuguese")),
     ("ru", _("Russian")),
 )
-DEFAULT_LANGUAGE = "fr"
+DEFAULT_LANGUAGE = os.environ.get("DEFAULT_LANGUAGE", "en-us")
 
 SITE_ID = 1
 
