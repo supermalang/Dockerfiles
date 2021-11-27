@@ -350,9 +350,7 @@ BRANDING = {
         "welcome_packs": [dict(size=5000, name="Demo Account"), dict(size=100000, name="VisiMax Account")],
         "title": _("Visually build nationally scalable mobile applications"),
         "description": _("Visually build nationally scalable mobile applications from anywhere in the world."),
-        "credits": _("Copyright &copy; 2012-%s UNICEF, Nyaruka, and individual contributors. All Rights Reserved. Customized service hosted by VisiMax." % (
-            datetime.now().strftime('%Y')
-        )),
+        "credits": _("Copyright &copy; 2012-2021 UNICEF, Nyaruka, and individual contributors. All Rights Reserved. Customized service hosted by VisiMax." ),
     }
 }
 DEFAULT_BRAND = os.environ.get("DEFAULT_BRAND", "rapidpro.io")
