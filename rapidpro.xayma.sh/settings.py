@@ -15,7 +15,7 @@ from celery.schedules import crontab
 
 SENTRY_DSN = os.environ.get("SENTRY_DSN", "")
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(';')
 
 if SENTRY_DSN:  # pragma: no cover
     sentry_sdk.init(
