@@ -1064,8 +1064,8 @@ else:
         ("text/less", 'lessc --include-path="%s" {infile} {outfile}' % os.path.join(PROJECT_DIR, "../static", "less")),
     )
 
-COMPRESS_ENABLED = False
-COMPRESS_OFFLINE = False
+COMPRESS_ENABLED = os.environ.get("COMPRESS_ENABLED", False)
+COMPRESS_OFFLINE = os.environ.get("COMPRESS_OFFLINE", False)
 
 # build up our offline compression context based on available brands
 COMPRESS_OFFLINE_CONTEXT = []
