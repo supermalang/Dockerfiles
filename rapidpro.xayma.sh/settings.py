@@ -968,7 +968,7 @@ OUTGOING_PROXIES = {}
 # Caching using Redis
 # -----------------------------------------------------------------------------------
 REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
-REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+REDIS_PORT = os.environ.get('REDIS_PORT', 6379)
 REDIS_DB = 10 if TESTING else 15  # we use a redis db of 10 for testing so that we maintain caches for dev
 
 CACHES = {
