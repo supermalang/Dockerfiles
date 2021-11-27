@@ -24,7 +24,7 @@ RUN set -ex \
     && cp mailroom /go/bin \ 
     && apt-get purge -y --auto-remove 
 
-EXPOSE 8080
+EXPOSE 8090
 
 USER mailroom
 
