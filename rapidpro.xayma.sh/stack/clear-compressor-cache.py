@@ -1,4 +1,5 @@
 import redis
+import os
 from getenv import env
 from urllib.parse import urlparse
 from django.conf import settings
@@ -11,8 +12,7 @@ key_prefix = cache.make_key('django_compressor')
 REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
 REDIS_PORT = os.environ.get('REDIS_PORT', 6379)
 
-up = urlparse(REDIS_HOST)
-redis_host = up.hostname
+redis_host = REDIS_HOST
 redis_port = REDIS_PORT
 redis_db = 15
 
