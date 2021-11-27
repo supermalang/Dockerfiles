@@ -942,7 +942,7 @@ _default_database_config = {
     "ENGINE": "django.contrib.gis.db.backends.postgis",
     "NAME": os.environ.get('DATABASE_NAME', 'temba'),
     "USER": os.environ.get('DATABASE_USER', 'temba'),
-    "PASSWORD": os.environ.get('DATABASE_TEMBA', 'temba'),
+    "PASSWORD": os.environ.get('DATABASE_PASSWORD', 'temba'),
     "HOST": os.environ.get('DATABASE_HOST', 'localhost'),
     "PORT": os.environ.get('DATABASE_PORT', '5432'),
     "ATOMIC_REQUESTS": True,
