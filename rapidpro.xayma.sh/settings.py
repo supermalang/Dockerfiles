@@ -982,7 +982,7 @@ CACHES = {
 # -----------------------------------------------------------------------------------
 # Async tasks using Celery
 # -----------------------------------------------------------------------------------
-CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', REDIS_URL)
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', "redis://%s:%s/%s" % (REDIS_HOST, REDIS_PORT, REDIS_DB))
 CELERY_BROKER_URL = "redis://%s:%s/%s" % (REDIS_HOST, REDIS_PORT, REDIS_DB)
 
 # by default, celery doesn't have any timeout on our redis connections, this fixes that
