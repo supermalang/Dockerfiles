@@ -983,7 +983,7 @@ CACHES = {
 # Async tasks using Celery
 # -----------------------------------------------------------------------------------
 CELERY_RESULT_BACKEND = None
-CELERY_BROKER_URL = "redis://%s:%d/%d" % (REDIS_HOST, REDIS_PORT, REDIS_DB)
+CELERY_BROKER_URL = "redis://%s:%s/%s" % (REDIS_HOST, REDIS_PORT, REDIS_DB)
 
 # by default, celery doesn't have any timeout on our redis connections, this fixes that
 CELERY_BROKER_TRANSPORT_OPTIONS = {"socket_timeout": 5}
