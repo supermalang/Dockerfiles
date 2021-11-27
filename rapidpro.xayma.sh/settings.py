@@ -15,6 +15,7 @@ from celery.schedules import crontab
 
 SENTRY_DSN = os.environ.get("SENTRY_DSN", "")
 
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost")
 
 if SENTRY_DSN:  # pragma: no cover
     sentry_sdk.init(
@@ -75,15 +76,15 @@ STORAGE_ROOT_DIR = "test_orgs" if TESTING else "orgs"
 # -----------------------------------------------------------------------------------
 # AWS S3 storage used in production
 # -----------------------------------------------------------------------------------
-AWS_ACCESS_KEY_ID = "aws_access_key_id"
-AWS_SECRET_ACCESS_KEY = "aws_secret_access_key"
-AWS_DEFAULT_ACL = "private"
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", "aws_access_key_id")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", "aws_secret_access_key")
+AWS_DEFAULT_ACL = os.environ.get("AWS_DEFAULT_ACL", "private")
 
-AWS_STORAGE_BUCKET_NAME = "dl-temba-io"
-AWS_BUCKET_DOMAIN = AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com"
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME", "dl-temba-io")
+AWS_BUCKET_DOMAIN = os.environ.get("AWS_BUCKET_DOMAIN", AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com")
 
 # bucket where archives files are stored
-ARCHIVE_BUCKET = "dl-temba-archives"
+ARCHIVE_BUCKET = os.environ.get("ARCHIVE_BUCKET", "dl-temba-archives")
 
 # -----------------------------------------------------------------------------------
 # On Unix systems, a value of None will cause Django to use the same
@@ -100,7 +101,7 @@ MODELTRANSLATION_TRANSLATION_REGISTRY = "translation"
 # -----------------------------------------------------------------------------------
 # Default language used for this installation
 # -----------------------------------------------------------------------------------
-LANGUAGE_CODE = "fr"
+LANGUAGE_CODE = os.environ.get("LANGUAGE_CODE", "fr")
 
 # -----------------------------------------------------------------------------------
 # Available languages for translation
@@ -140,7 +141,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = "your own secret key"
+SECRET_KEY = os.environ.get("SECRET_KEY", "your own secret key")
 
 # -----------------------------------------------------------------------------------
 # Directory Configuration
