@@ -18,7 +18,7 @@ RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends wget \
     && rm -rf /var/lib/apt/lists/* \
-    && git clone --depth 1 "https://github.com/$RP_INDEXER_REPO.git" \
+    && git clone --depth 1 --branch "v$RP_INDEXER_VERSION" "https://github.com/$RP_INDEXER_REPO.git" \
     && cd rp-indexer \
     && go build "github.com/$RP_INDEXER_REPO"/cmd/rp-indexer  \
     && cp rp-indexer /go/bin \ 

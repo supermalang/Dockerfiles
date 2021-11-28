@@ -18,7 +18,7 @@ RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends wget \
     && rm -rf /var/lib/apt/lists/* \
-    && git clone --depth 1 "https://github.com/$RP_ARCHIVER_REPO.git" \
+    && git clone --depth 1 --branch "v$RP_ARCHIVER_VERSION" "https://github.com/$RP_ARCHIVER_REPO.git" \
     && cd rp-archiver \
     && go build "github.com/$RP_ARCHIVER_REPO"/cmd/rp-archiver  \
     && cp rp-archiver /go/bin \ 

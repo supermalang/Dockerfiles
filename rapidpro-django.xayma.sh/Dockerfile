@@ -17,7 +17,8 @@ RUN set -ex \
         && apt install -y --no-install-recommends \
             postgresql-client-11 \
             postgresql-server-dev-11 \
-            readline-common 
+            readline-common \
+            nginx
 
 # Install `libmagic` (needed since rapidpro v3.0.64)
 RUN apt-get install -y --no-install-recommends libmagic1
@@ -77,7 +78,7 @@ LABEL org.label-schema.name="RapidPro" \
       org.label-schema.description="RapidPro allows organizations to visually build scalable interactive messaging applications." \
       org.label-schema.url="https://www.rapidpro.io/" \
       org.label-schema.vcs-url="https://github.com/$RAPIDPRO_REPO" \
-      org.label-schema.vendor="Custom service hosted by VisiMax" \
+      org.label-schema.vendor="VisiMax by Supermalang" \
       org.label-schema.version=$RAPIDPRO_VERSION \
       org.label-schema.schema-version="1.0"
 

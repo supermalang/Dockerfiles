@@ -18,7 +18,7 @@ RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends wget \
     && rm -rf /var/lib/apt/lists/* \
-    && git clone --depth 1 "https://github.com/$COURIER_REPO.git" \
+    && git clone --depth 1 --branch "v$COURIER_VERSION" "https://github.com/$COURIER_REPO.git" \
     && cd courier \
     && go build "github.com/$COURIER_REPO"/cmd/courier  \
     && cp courier /go/bin \ 
