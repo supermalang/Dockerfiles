@@ -25,7 +25,7 @@ RUN set -ex \
     \
     # Just grab the binary and the docs directory
     && mv /usr/local/src/mailroom/mailroom /usr/local/bin/ \
-    && mv /usr/local/src/mailroom/docs / \
+    && mv /usr/local/src/mailroom/docs /usr/local/bin/ \
     && rm -rf /usr/local/src/mailroom mailroom.tar.gz \
     \
     && apt-get purge -y --auto-remove 
