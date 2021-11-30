@@ -63,7 +63,7 @@ RUN cd /rapidpro \
 ENV UWSGI_VIRTUALENV=/venv UWSGI_WSGI_FILE=temba/wsgi.py UWSGI_HTTP=:8000 UWSGI_MASTER=1 UWSGI_WORKERS=8 UWSGI_HARAKIRI=20
 # Enable HTTP 1.1 Keep Alive options for uWSGI (http-auto-chunked needed when ConditionalGetMiddleware not installed)
 # These options don't appear to be configurable via environment variables, so pass them in here instead
-ENV STARTUP_CMD="/venv/bin/uwsgi --http-auto-chunked --http-keepalive && service nginx start"
+ENV STARTUP_CMD="/venv/bin/uwsgi --http-auto-chunked --http-keepalive"
 
 COPY settings.py /rapidpro/temba/
 # 500.html needed to keep the missing template from causing an exception during error handling

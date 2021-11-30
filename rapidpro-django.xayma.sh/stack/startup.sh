@@ -26,4 +26,7 @@ if [ "x$MANAGEPY_IMPORT_GEOJSON" = "xon" ]; then
 	/venv/bin/python manage.py import_geojson ./geojson/*.json
 	echo "Imported geojson for relation_ids $OSM_RELATION_IDS"
 fi
+
+service nginx start
+
 $STARTUP_CMD
