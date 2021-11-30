@@ -27,7 +27,7 @@ RUN set -ex \
     mv /usr/local/src/mailroom/docs /; \
     rm -rf /usr/local/src/mailroom mailroom.tar.gz; \
     \
-    && apt-get purge -y --auto-remove 
+    apt-get purge -y --auto-remove 
 
 EXPOSE 8090
 
