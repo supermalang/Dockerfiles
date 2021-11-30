@@ -18,17 +18,17 @@ RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends wget \
     && rm -rf /var/lib/apt/lists/* \
-    wget "https://github.com/$MAILROOM_REPO/releases/download/v${MAILROOM_VERSION}/mailroom_${MAILROOM_VERSION}_linux_amd64.tar.gz"; \
-    mv "mailroom_${MAILROOM_VERSION}_linux_amd64.tar.gz" mailroom.tar.gz; \
-    mkdir /usr/local/src/mailroom; \
-    tar -xzC /usr/local/src/mailroom -f mailroom.tar.gz; \
+    && wget "https://github.com/$MAILROOM_REPO/releases/download/v${MAILROOM_VERSION}/mailroom_${MAILROOM_VERSION}_linux_amd64.tar.gz" \
+    && mv "mailroom_${MAILROOM_VERSION}_linux_amd64.tar.gz" mailroom.tar.gz \
+    && mkdir /usr/local/src/mailroom \
+    && tar -xzC /usr/local/src/mailroom -f mailroom.tar.gz \
     \
     # Just grab the binary and the docs directory
-    mv /usr/local/src/mailroom/mailroom /usr/local/bin/; \
-    mv /usr/local/src/mailroom/docs /; \
-    rm -rf /usr/local/src/mailroom mailroom.tar.gz; \
+    && mv /usr/local/src/mailroom/mailroom /usr/local/bin/ \
+    && mv /usr/local/src/mailroom/docs / \
+    && rm -rf /usr/local/src/mailroom mailroom.tar.gz \
     \
-    apt-get purge -y --auto-remove 
+    && apt-get purge -y --auto-remove 
 
 EXPOSE 8090
 
