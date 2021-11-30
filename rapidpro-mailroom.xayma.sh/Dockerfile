@@ -18,10 +18,15 @@ RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends wget \
     && rm -rf /var/lib/apt/lists/* \
-    && git clone --depth 1 --branch "v$MAILROOM_VERSION" "https://github.com/$MAILROOM_REPO.git" \
-    && cd mailroom \
-    && go build "github.com/$MAILROOM_REPO"/cmd/mailroom  \
-    && cp mailroom /go/bin \ 
+    wget -O mailroom.tar.gz "https://github.com/$MAILROOM_REPO/releases/download/v${MAILROOM_VERSION}/mailroom_${MAILROOM_VERSION}_linux_amd64.tar.gz"; \
+    mkdir /usr/local/src/mailroom; \
+    tar -xzC /usr/local/src/mailroom -f mailroom.tar.gz; \
+    \
+    # Just grab the binary and the docs directory
+    mv /usr/local/src/mailroom/mailroom /usr/local/bin/; \
+    mv /usr/local/src/mailroom/docs /; \
+    rm -rf /usr/local/src/mailroom mailroom.tar.gz; \
+    \
     && apt-get purge -y --auto-remove 
 
 EXPOSE 8090
