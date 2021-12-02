@@ -1,0 +1,32 @@
+version: '3'
+services:
+  traefik:
+    image: "traefik:v2.5"
+    container_name: "0__traefik__reverseproxy"
+    ports:
+      - "80:80"
+      - "443:443"
+      # (Optional) Expose Dashboard
+      - "8080:8080"  # Don't do this in production!
+    volumes:
+      - /etc/traefik:/etc/traefik
+      - traefik-ssl-certs:/ssl-certs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+volumes:
+  traefik-ssl-certs:
+    driver: local
+
+# Dynamic Configuration
+labels:
+  - "traefik.http.routers.dashboard.rule=Host(`traefik.example.com`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+  - "traefik.http.routers.dashboard.service=api@internal"
+  # If you want to add authentication for the traefik dashboard
+  - "traefik.http.routers.dashboard.middlewares=auth"
+  # test is first user and test2 is 2nd. 
+  # you can use htpasswd to generate your own passwords
+  - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
+  - "traefik.docker.network=frontend_network"
+
+networks:
+  - name: frontend_network
