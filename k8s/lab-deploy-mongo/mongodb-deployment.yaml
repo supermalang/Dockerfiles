@@ -16,19 +16,19 @@ spec:
     spec:
       containers:
       - name: xaymalabs-mongodb-pod
-        image: mongodb
+        image: mongo
         ports:
         - containerPort: 27017
         env:
           - name: MONGO_INITDB_ROOT_USERNAME 
             valueFrom:
               secretKeyRef:
-                name: xaymalabs-mongodb-secret
+                name: xaymalabs-mongo-secret
                 key: mongo-username
           - name: MONGO_INITDB_ROOT_PASSWORD  
             valueFrom:
               secretKeyRef:
-                name: xaymalabs-mongodb-secret
+                name: xaymalabs-mongo-secret
                 key: mongo-password
 ---
 apiVersion: v1
