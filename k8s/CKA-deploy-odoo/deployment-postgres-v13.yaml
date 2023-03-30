@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-deployment-service
+  labels:
+    app: odoo
+    tier: backend
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: odoo
+    tier: backend
+  clusterIP: None
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc-dev
+  labels:
+    app: odoo
+    tier: backend
+spec:
+  storageClassName: azurefile-df
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: odoo
+    tier: backend
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odoo
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: odoo
+        tier: backend
+    spec:
+      securityContext:
+        fsGroup: 999
+        runAsUser: 999
+        runAsGroup: 999
+      containers:
+      - image: postgres:13.0
+        name: postgres
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-database
+        envFrom:
+        - configMapRef:
+            name: app-config
+      volumes:
+        - name: postgres-database
+          persistentVolumeClaim:
+            claimName: postgres-pvc-dev

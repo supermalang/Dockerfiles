@@ -1,0 +1,85 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: odoo
+    tier: frontend
+  name: odoo-deployment-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 8069
+  selector:
+    app: odoo
+    tier: frontend
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: odoo
+    tier: frontend
+  name: odoo-pvc-webdatadir-dev
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: azurefile-df
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: odoo
+    tier: frontend
+  name: odoo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odoo
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: odoo
+        tier: frontend
+    spec:
+      initContainers:
+      - name: wait-for-database
+        image: busybox:1.28
+        command: ['sh', '-c', 'until nslookup postgres-deployment-service; do echo waiting for postgres-deployment-service; sleep 2; done']
+      containers:
+      - name: odoo
+        resources:
+          requests:
+            cpu: 0.07
+            memory: "512Mi"
+          limits:
+            cpu: 0.1
+            memory: "768Mi"
+        envFrom:
+        - configMapRef:
+            name: app-config
+        image: odoo:16.0
+        ports:
+        - containerPort: 8069
+        volumeMounts:
+        - mountPath: /etc/odoo/
+          name: file-volume
+        - mountPath: /var/lib/odoo
+          name: webdatadir
+      volumes:
+      - name: file-volume
+        configMap:
+          name: odoo-parameters
+          items:
+          - key: odoo.conf
+            path: odoo.conf
+      - name: webdatadir
+        persistentVolumeClaim:
+          claimName: odoo-pvc-webdatadir-dev

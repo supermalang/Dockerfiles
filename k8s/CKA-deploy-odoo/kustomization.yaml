@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: delice-food
+
+configMapGenerator:
+  - name: app-config
+    envs:
+      - app-pg-config.env
+      - app-odoo-config.env
+  - name: odoo-parameters
+    files:
+      - odoo.conf
+
+resources:
+  - namespace.yaml
+  - storage-class.yaml
+  - deployment-odoo-v16.yaml
+  - deployment-postgres-v13.yaml
