@@ -7,13 +7,13 @@ metadata:
     tier: frontend
   name: odoo-deployment-service
 spec:
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 8069
   selector:
     app: odoo
     tier: frontend
-  type: LoadBalancer
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -24,7 +24,7 @@ metadata:
   name: odoo-pvc-webdatadir-dev
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
@@ -36,7 +36,7 @@ metadata:
   labels:
     app: odoo
     tier: frontend
-  name: odoo-deployment
+  name: odoo16
 spec:
   replicas: 1
   selector:
@@ -55,6 +55,7 @@ spec:
         command: ['sh', '-c', 'until nslookup postgres-deployment-service; do echo waiting for postgres-deployment-service; sleep 2; done']
       containers:
       - name: odoo
+        image: odoo:16.0
         resources:
           requests:
             cpu: 0.07
@@ -65,7 +66,6 @@ spec:
         envFrom:
         - configMapRef:
             name: app-config
-        image: odoo:16.0
         ports:
         - containerPort: 8069
         volumeMounts:

@@ -6,13 +6,13 @@ provisioner: file.csi.azure.com
 parameters:
   skuName: Standard_LRS
   storageAccount: t4daks1storage
-  shareName: delice-food-share
+  shareName: delice-food-erp
   secretNamespace: delice-food
   secretName: azure-storage-account-secret
 mountOptions:
-  - dir_mode=0750
-  - file_mode=0750
-  - uid=999
-  - gid=999
+  - dir_mode=0777
+  - file_mode=0777
+  - uid=1000
+  - gid=1000
   - mfsymlinks
   - nobrl

@@ -6,13 +6,13 @@ metadata:
     app: odoo
     tier: backend
 spec:
+  clusterIP: None
   ports:
     - port: 5432
       targetPort: 5432
   selector:
     app: odoo
     tier: backend
-  clusterIP: None
 
 ---
 apiVersion: v1
@@ -23,7 +23,7 @@ metadata:
     app: odoo
     tier: backend
 spec:
-  storageClassName: azurefile-df
+  storageClassName: default # Azure AKS
   accessModes:
     - ReadWriteOnce
   resources:
@@ -37,7 +37,7 @@ metadata:
   labels:
     app: odoo
     tier: backend
-  name: postgres-deployment
+  name: postgres13
 spec:
   replicas: 1
   selector:
@@ -51,12 +51,19 @@ spec:
         tier: backend
     spec:
       securityContext:
-        fsGroup: 999
-        runAsUser: 999
-        runAsGroup: 999
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
       containers:
-      - image: postgres:13.0
-        name: postgres
+      - name: postgres
+        image: postgres:13.0
+        resources:
+          requests:
+            cpu: 0.07
+            memory: "512Mi"
+          limits:
+            cpu: 0.1
+            memory: "768Mi"
         ports:
         - containerPort: 5432
         volumeMounts:
