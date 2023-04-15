@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: xayma-rdbms
+namePrefix: xayma-rdbms-
+
+configMapGenerator:
+  - name: app-config
+    envs:
+      - app-mariadb-config.env
+      - app-adminer-config.env
+  #- name: adminer-css
+  #  files:
+  #    - adminer.css
+
+resources:
+  - namespace.yaml
+  #- storage-class.yaml
+  - deployment-adminer-v4.8.1-standalone.yaml
+  - statefulset-mariadb-v11.yaml

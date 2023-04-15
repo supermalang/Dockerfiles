@@ -1,0 +1,55 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    tier: xayma_rdbms
+  name: adminer
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    tier: xayma_rdbms
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    tier: xayma_rdbms
+  name: adminer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: xayma_rdbms
+  template:
+    metadata:
+      labels:
+        tier: xayma_rdbms
+    spec:
+      initContainers:
+      - name: wait-for-database
+        image: busybox:1.28
+        command: ['sh', '-c', 'until nslookup xayma-rdbms-mariadb; do echo waiting for mariadb database; sleep 2; done']
+      containers:
+      - name: adminer
+        image: adminer:4.8.1-standalone
+        #resources:
+        #  requests:
+        #    cpu: 0.07
+        #    memory: "256Mi"
+        #  limits:
+        #    cpu: 0.1
+        #    memory: "325Mi"
+        envFrom:
+        - configMapRef:
+            name: app-config
+        ports:
+        - containerPort: 8080
+        lifecycle:
+          postStart:
+            exec:
+              command: ["sh", "-c", "ln -sf /var/www/html/designs/pepa-linha/adminer.css /var/www/html/adminer.css"]

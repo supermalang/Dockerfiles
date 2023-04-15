@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-path
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: app2.wcar-t4d.info
+      http:
+        paths:
+        - path: /nginx
+          pathType: Prefix
+          backend:
+            service:
+              name: hello-world-service-single
+              port: 
+                number: 80
+        - path: /rstudio
+          pathType: Exact
+          backend:
+            service:
+              name: r-studio
+              port: 
+                number: 8787
+
