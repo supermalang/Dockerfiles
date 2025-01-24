@@ -1,3 +1,5 @@
+ARG WP_VERSION
+
 # Use the Bitnami WordPress image as the base
 FROM bitnami/wordpress:${WP_VERSION}
 
